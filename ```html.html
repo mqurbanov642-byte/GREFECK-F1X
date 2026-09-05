@@ -1,0 +1,551 @@
+```html
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GREFECK | Discord</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+html{scroll-behavior:smooth;}
+
+body{
+    background:#050507;
+    color:white;
+    overflow-x:hidden;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:
+        radial-gradient(circle at 50% 20%,rgba(125,40,255,.18),transparent 30%),
+        radial-gradient(circle at 20% 80%,rgba(80,0,150,.12),transparent 25%),
+        #050507;
+    z-index:-3;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    background-image:radial-gradient(rgba(255,255,255,.12) 1px,transparent 1px);
+    background-size:45px 45px;
+    opacity:.15;
+    z-index:-2;
+}
+
+nav{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:75px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 7%;
+    background:rgba(5,5,7,.65);
+    backdrop-filter:blur(15px);
+    border-bottom:1px solid rgba(150,70,255,.15);
+    z-index:100;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:900;
+    letter-spacing:4px;
+    color:#b56cff;
+    text-shadow:0 0 20px #7d2cff;
+}
+
+.nav-links{
+    display:flex;
+    gap:30px;
+}
+
+.nav-links a{
+    color:#aaa;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.nav-links a:hover{
+    color:white;
+    text-shadow:0 0 10px #a84cff;
+}
+
+.hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:120px 20px 70px;
+    position:relative;
+}
+
+.hero-content{
+    max-width:900px;
+}
+
+.badge{
+    display:inline-block;
+    padding:9px 18px;
+    border:1px solid rgba(173,91,255,.5);
+    border-radius:30px;
+    color:#c58aff;
+    background:rgba(126,38,255,.08);
+    margin-bottom:25px;
+    font-size:13px;
+    letter-spacing:2px;
+}
+
+h1{
+    font-size:clamp(55px,10vw,125px);
+    letter-spacing:12px;
+    font-weight:1000;
+    line-height:.9;
+    text-shadow:
+        0 0 15px rgba(180,80,255,.8),
+        0 0 60px rgba(100,0,255,.5);
+}
+
+.hero p{
+    margin:35px auto;
+    max-width:650px;
+    color:#aaa;
+    font-size:18px;
+    line-height:1.7;
+}
+
+.buttons{
+    display:flex;
+    justify-content:center;
+    gap:14px;
+    flex-wrap:wrap;
+}
+
+.join{
+    padding:16px 30px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(135deg,#9d42ff,#5c16c9);
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    text-decoration:none;
+    box-shadow:0 0 30px rgba(130,40,255,.35);
+    transition:.3s;
+}
+
+.join:hover{
+    transform:translateY(-3px);
+    box-shadow:0 0 45px rgba(150,50,255,.7);
+}
+
+.like{
+    padding:16px 24px;
+    border:1px solid #333;
+    border-radius:10px;
+    background:#111116;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.like:hover{
+    border-color:#a64cff;
+    box-shadow:0 0 20px rgba(150,50,255,.25);
+}
+
+.like.liked{
+    border-color:#9d42ff;
+    color:#c487ff;
+    background:#1a0b29;
+}
+
+.scroll{
+    position:absolute;
+    bottom:30px;
+    color:#666;
+    font-size:12px;
+    letter-spacing:3px;
+    animation:float 2s infinite;
+}
+
+@keyframes float{
+    50%{transform:translateY(8px);}
+}
+
+section{
+    padding:120px 8%;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:60px;
+}
+
+.section-title span{
+    color:#a957ff;
+    font-size:13px;
+    letter-spacing:4px;
+}
+
+.section-title h2{
+    margin-top:12px;
+    font-size:45px;
+}
+
+.cards{
+    max-width:1100px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.card{
+    padding:35px;
+    background:rgba(15,15,20,.7);
+    border:1px solid rgba(255,255,255,.07);
+    border-radius:18px;
+    transition:.4s;
+    position:relative;
+    overflow:hidden;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    border-color:rgba(160,70,255,.4);
+    box-shadow:0 20px 60px rgba(70,0,130,.25);
+}
+
+.icon{
+    font-size:35px;
+    margin-bottom:20px;
+}
+
+.card h3{
+    margin-bottom:12px;
+}
+
+.card p{
+    color:#888;
+    line-height:1.7;
+}
+
+.mystery{
+    min-height:500px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+.mystery-box{
+    max-width:800px;
+    padding:60px;
+    border:1px solid rgba(150,60,255,.2);
+    border-radius:25px;
+    background:
+        radial-gradient(circle,rgba(110,20,200,.12),transparent 60%),
+        rgba(10,10,14,.8);
+    box-shadow:0 0 80px rgba(90,0,180,.08);
+}
+
+.mystery-box h2{
+    font-size:50px;
+    margin-bottom:25px;
+}
+
+.mystery-box p{
+    color:#999;
+    font-size:18px;
+    line-height:1.8;
+}
+
+.server{
+    text-align:center;
+}
+
+.server-card{
+    max-width:700px;
+    margin:auto;
+    padding:45px;
+    border-radius:25px;
+    background:#0c0c11;
+    border:1px solid #222;
+    box-shadow:0 0 70px rgba(100,30,200,.12);
+}
+
+.server-icon{
+    width:100px;
+    height:100px;
+    margin:auto;
+    border-radius:25px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:45px;
+    background:linear-gradient(135deg,#7d25ed,#26004f);
+    box-shadow:0 0 40px rgba(130,30,255,.5);
+}
+
+.server-card h3{
+    margin:25px 0 10px;
+    font-size:28px;
+}
+
+.status{
+    color:#6dff9a;
+    font-size:14px;
+}
+
+.server-info{
+    margin:25px 0;
+    display:flex;
+    justify-content:center;
+    gap:35px;
+    color:#888;
+}
+
+footer{
+    text-align:center;
+    padding:50px 20px;
+    border-top:1px solid #15151b;
+    color:#555;
+}
+
+footer strong{
+    color:#9d55e9;
+}
+
+@media(max-width:800px){
+    .nav-links{display:none;}
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    h1{
+        letter-spacing:6px;
+    }
+
+    .mystery-box{
+        padding:35px 20px;
+    }
+
+    .mystery-box h2{
+        font-size:35px;
+    }
+
+    .server-info{
+        flex-direction:column;
+        gap:10px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">GREFECK</div>
+
+    <div class="nav-links">
+        <a href="#hakkinda">Hakkında</a>
+        <a href="#ozellikler">Özellikler</a>
+        <a href="#katil">Katıl</a>
+    </div>
+</nav>
+
+<header class="hero">
+
+    <div class="hero-content">
+
+        <div class="badge">DISCORD COMMUNITY</div>
+
+        <h1>GREFECK</h1>
+
+        <p>
+            Sıradan Discord sunucularından sıkıldıysan,
+            burada farklı bir şey var.
+            Sohbet et, oyun oyna, yeni insanlarla tanış
+            ve kendi hikâyeni oluştur.
+        </p>
+
+        <div class="buttons">
+
+            <a
+                class="join"
+                href="https://discord.gg/DQCkUFWkX"
+                target="_blank">
+                🚀 SUNUCUYA KATIL
+            </a>
+
+            <button class="like" id="likeBtn">
+                ♡ BEĞEN
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="scroll">
+        AŞAĞI KAYDIR ↓
+    </div>
+
+</header>
+
+<section id="hakkinda">
+
+    <div class="section-title">
+        <span>BİZ KİMİZ?</span>
+        <h2>Sunucuda Neler Var?</h2>
+    </div>
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="icon">🎮</div>
+            <h3>Oyun</h3>
+            <p>
+                Oyun arkadaşlarını bul,
+                beraber oyna ve eğlenceli
+                anlar yaşa.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="icon">💬</div>
+            <h3>Sohbet</h3>
+            <p>
+                Aktif sohbet kanallarında
+                yeni insanlarla tanış ve
+                topluluğa katıl.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="icon">⚡</div>
+            <h3>Etkinlikler</h3>
+            <p>
+                Etkinliklere katıl,
+                toplulukla beraber eğlen
+                ve sürprizleri keşfet.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="mystery">
+
+    <div class="mystery-box">
+
+        <div class="section-title">
+            <span>MERAK EDİYOR MUSUN?</span>
+        </div>
+
+        <h2>Her şeyi burada anlatmayacağız.</h2>
+
+        <p>
+            Çünkü bazı şeyleri keşfetmek,
+            anlatılmasından daha eğlencelidir.
+            Sunucuya gir ve kendin keşfet.
+        </p>
+
+    </div>
+
+</section>
+
+<section id="katil" class="server">
+
+    <div class="section-title">
+        <span>SON ADIM</span>
+        <h2>Aramıza Katıl</h2>
+    </div>
+
+    <div class="server-card">
+
+        <div class="server-icon">
+            G
+        </div>
+
+        <h3>GREFECK</h3>
+
+        <div class="status">
+            ● Şu anda aktif
+        </div>
+
+        <div class="server-info">
+            <span>👥 Topluluk</span>
+            <span>🎮 Oyun</span>
+            <span>💬 Sohbet</span>
+        </div>
+
+        <a
+            class="join"
+            href="https://discord.gg/DQCkUFWkX"
+            target="_blank">
+            DISCORD'A KATIL
+        </a>
+
+    </div>
+
+</section>
+
+<footer>
+    <p>
+        © 2026 <strong>GREFECK</strong> · Tüm hakları saklıdır.
+    </p>
+</footer>
+
+<script>
+
+const likeBtn = document.getElementById("likeBtn");
+
+let liked = localStorage.getItem("grefeckLiked") === "true";
+
+function updateLike(){
+
+    if(liked){
+        likeBtn.classList.add("liked");
+        likeBtn.innerHTML = "❤️ BEĞENDİN ✓";
+    }else{
+        likeBtn.classList.remove("liked");
+        likeBtn.innerHTML = "♡ BEĞEN";
+    }
+
+}
+
+likeBtn.addEventListener("click", () => {
+
+    liked = !liked;
+
+    localStorage.setItem("grefeckLiked", liked);
+
+    updateLike();
+
+});
+
+updateLike();
+
+</script>
+
+</body>
+</html>
+```
